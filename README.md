@@ -10,3 +10,4 @@ API_KEY='your_key'
 ```
 
 (Credit) Here is the [link](https://susuthapa19961227.medium.com/yet-another-unidirectional-state-flow-architecture-for-flutter-53d26f7330fd) to the full blog post.
+
