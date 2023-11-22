@@ -81,6 +81,7 @@ class HomeState with _$HomeState {
     @Default(ContentStatus.loaded) ContentStatus contentStatus,
     @Default([]) List<Movie> history,
     @Default(HomeNavArgs()) HomeNavArgs nav,
+    @Default(false) bool isLoggedIn,
   }) = _HomeState;
 }
 

@@ -1,3 +1,5 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,6 +10,7 @@ import 'package:movies_usf/domain/content_status.dart';
 import 'package:movies_usf/domain/movie.dart';
 import 'package:movies_usf/presentation/common/navigation.dart';
 import 'package:movies_usf/presentation/theme/colors.dart';
+import 'package:movies_usf/router/app_router.dart';
 import 'package:movies_usf/router/router_vm.dart';
 import 'package:movies_usf/router/ui_pages.dart';
 
@@ -49,6 +52,7 @@ Widget imageLoading(String url) {
   );
 }
 
+@RoutePage()
 class HomePage extends HookConsumerWidget {
   HomeViewModel _vm(WidgetRef ref) {
     return ref.read(_homeVMProvider.notifier);
@@ -66,12 +70,16 @@ class HomePage extends HookConsumerWidget {
         _homeVMProvider,
         ref: ref,
         listener: (vm) {
-          final routerVM = ref.read(routerVMProvider.notifier);
+          // final routerVM = ref.read(routerVMProvider.notifier);
+          // if (vm.state.nav.type == HomeNav.details) {
+          //   routerVM.action = PageAction(
+          //     state: PageState.addPage,
+          //     page: DetailsPageConfig.copyWith(args: vm.state.nav.args),
+          //   );
+          // }
           if (vm.state.nav.type == HomeNav.details) {
-            routerVM.action = PageAction(
-              state: PageState.addPage,
-              page: DetailsPageConfig.copyWith(args: vm.state.nav.args),
-            );
+            AutoRouter.of(context)
+                .push(DetailsRoute(movie: vm.state.nav.args as Movie));
           }
         },
         child: Column(
@@ -107,10 +115,8 @@ class HomePage extends HookConsumerWidget {
             ),
             Expanded(
               child: _MovieListWidget(
-                onItemClick: (position) =>
-                    _vm(ref).loadMovieDetails(position),
-                onAddClick: (position) =>
-                    _vm(ref).addMovieToHistory(position),
+                onItemClick: (position) => _vm(ref).loadMovieDetails(position),
+                onAddClick: (position) => _vm(ref).addMovieToHistory(position),
               ),
             ),
             HistoryListWidget(),
@@ -125,7 +131,8 @@ class HistoryListWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Fimber.d('building history list');
-    final history = ref.watch(_homeVMProvider.select((value) => value.state.history));
+    final history =
+        ref.watch(_homeVMProvider.select((value) => value.state.history));
     return Visibility(
       visible: history.length != 0,
       child: Column(
@@ -159,8 +166,8 @@ class _MovieListWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Fimber.d("building movies list widget");
-    final searchResult = ref.watch(
-        _homeVMProvider.select((value) => value.state.searchResult));
+    final searchResult =
+        ref.watch(_homeVMProvider.select((value) => value.state.searchResult));
     return ListView.builder(
       itemBuilder: (context, position) {
         return InkWell(
@@ -180,8 +187,8 @@ class _ProgressIndicator extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Fimber.d('building progress indicator');
-    final contentStatus = ref.watch(
-        _homeVMProvider.select((value) => value.state.contentStatus));
+    final contentStatus =
+        ref.watch(_homeVMProvider.select((value) => value.state.contentStatus));
     return Visibility(
       visible: contentStatus.status == DataStatus.loading,
       child: LinearProgressIndicator(),

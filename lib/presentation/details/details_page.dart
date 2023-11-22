@@ -1,7 +1,9 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_usf/domain/movie.dart';
 
+@RoutePage()
 class DetailsPage extends StatelessWidget {
   final Movie movie;
 

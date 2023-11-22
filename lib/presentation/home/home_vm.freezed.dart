@@ -20,6 +20,7 @@ mixin _$HomeState {
   ContentStatus get contentStatus => throw _privateConstructorUsedError;
   List<Movie> get history => throw _privateConstructorUsedError;
   HomeNavArgs get nav => throw _privateConstructorUsedError;
+  bool get isLoggedIn => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -35,7 +36,8 @@ abstract class $HomeStateCopyWith<$Res> {
       {List<Movie> searchResult,
       ContentStatus contentStatus,
       List<Movie> history,
-      HomeNavArgs nav});
+      HomeNavArgs nav,
+      bool isLoggedIn});
 
   $ContentStatusCopyWith<$Res> get contentStatus;
   $HomeNavArgsCopyWith<$Res> get nav;
@@ -58,6 +60,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? contentStatus = null,
     Object? history = null,
     Object? nav = null,
+    Object? isLoggedIn = null,
   }) {
     return _then(_value.copyWith(
       searchResult: null == searchResult
@@ -76,6 +79,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.nav
           : nav // ignore: cast_nullable_to_non_nullable
               as HomeNavArgs,
+      isLoggedIn: null == isLoggedIn
+          ? _value.isLoggedIn
+          : isLoggedIn // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -108,7 +115,8 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       {List<Movie> searchResult,
       ContentStatus contentStatus,
       List<Movie> history,
-      HomeNavArgs nav});
+      HomeNavArgs nav,
+      bool isLoggedIn});
 
   @override
   $ContentStatusCopyWith<$Res> get contentStatus;
@@ -131,6 +139,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? contentStatus = null,
     Object? history = null,
     Object? nav = null,
+    Object? isLoggedIn = null,
   }) {
     return _then(_$HomeStateImpl(
       searchResult: null == searchResult
@@ -149,6 +158,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.nav
           : nav // ignore: cast_nullable_to_non_nullable
               as HomeNavArgs,
+      isLoggedIn: null == isLoggedIn
+          ? _value.isLoggedIn
+          : isLoggedIn // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -160,7 +173,8 @@ class _$HomeStateImpl with DiagnosticableTreeMixin implements _HomeState {
       {final List<Movie> searchResult = const [],
       this.contentStatus = ContentStatus.loaded,
       final List<Movie> history = const [],
-      this.nav = const HomeNavArgs()})
+      this.nav = const HomeNavArgs(),
+      this.isLoggedIn = false})
       : _searchResult = searchResult,
         _history = history;
 
@@ -188,10 +202,13 @@ class _$HomeStateImpl with DiagnosticableTreeMixin implements _HomeState {
   @override
   @JsonKey()
   final HomeNavArgs nav;
+  @override
+  @JsonKey()
+  final bool isLoggedIn;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeState(searchResult: $searchResult, contentStatus: $contentStatus, history: $history, nav: $nav)';
+    return 'HomeState(searchResult: $searchResult, contentStatus: $contentStatus, history: $history, nav: $nav, isLoggedIn: $isLoggedIn)';
   }
 
   @override
@@ -202,7 +219,8 @@ class _$HomeStateImpl with DiagnosticableTreeMixin implements _HomeState {
       ..add(DiagnosticsProperty('searchResult', searchResult))
       ..add(DiagnosticsProperty('contentStatus', contentStatus))
       ..add(DiagnosticsProperty('history', history))
-      ..add(DiagnosticsProperty('nav', nav));
+      ..add(DiagnosticsProperty('nav', nav))
+      ..add(DiagnosticsProperty('isLoggedIn', isLoggedIn));
   }
 
   @override
@@ -215,7 +233,9 @@ class _$HomeStateImpl with DiagnosticableTreeMixin implements _HomeState {
             (identical(other.contentStatus, contentStatus) ||
                 other.contentStatus == contentStatus) &&
             const DeepCollectionEquality().equals(other._history, _history) &&
-            (identical(other.nav, nav) || other.nav == nav));
+            (identical(other.nav, nav) || other.nav == nav) &&
+            (identical(other.isLoggedIn, isLoggedIn) ||
+                other.isLoggedIn == isLoggedIn));
   }
 
   @override
@@ -224,7 +244,8 @@ class _$HomeStateImpl with DiagnosticableTreeMixin implements _HomeState {
       const DeepCollectionEquality().hash(_searchResult),
       contentStatus,
       const DeepCollectionEquality().hash(_history),
-      nav);
+      nav,
+      isLoggedIn);
 
   @JsonKey(ignore: true)
   @override
@@ -238,7 +259,8 @@ abstract class _HomeState implements HomeState {
       {final List<Movie> searchResult,
       final ContentStatus contentStatus,
       final List<Movie> history,
-      final HomeNavArgs nav}) = _$HomeStateImpl;
+      final HomeNavArgs nav,
+      final bool isLoggedIn}) = _$HomeStateImpl;
 
   @override
   List<Movie> get searchResult;
@@ -248,6 +270,8 @@ abstract class _HomeState implements HomeState {
   List<Movie> get history;
   @override
   HomeNavArgs get nav;
+  @override
+  bool get isLoggedIn;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>

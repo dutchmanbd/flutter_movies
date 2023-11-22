@@ -11,12 +11,9 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:movies_usf/data/api_service.dart' as _i3;
-import 'package:movies_usf/data/movies_repository.dart' as _i6;
-import 'package:movies_usf/di/modules.dart' as _i9;
-import 'package:movies_usf/presentation/home/home_vm.dart' as _i8;
-import 'package:movies_usf/router/route_parser.dart' as _i5;
-import 'package:movies_usf/router/router_delegate.dart' as _i4;
-import 'package:movies_usf/router/router_vm.dart' as _i7;
+import 'package:movies_usf/data/movies_repository.dart' as _i4;
+import 'package:movies_usf/di/modules.dart' as _i6;
+import 'package:movies_usf/presentation/home/home_vm.dart' as _i5;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -31,16 +28,12 @@ extension GetItInjectableX on _i1.GetIt {
     );
     final networkModule = _$NetworkModule();
     gh.singleton<_i3.ApiService>(networkModule.getApi());
-    gh.factory<_i4.AppRouterDelegate>(() => _i4.AppRouterDelegate());
-    gh.factory<_i5.AppRoutingParser>(() => _i5.AppRoutingParser());
-    gh.singleton<_i6.MoviesRepository>(
-        _i6.MoviesRepository(gh<_i3.ApiService>()));
-    gh.factory<_i7.RouteHandler>(() => _i7.RouteHandler());
-    gh.singleton<_i7.RouterVM>(_i7.RouterVM(gh<_i7.RouteHandler>()));
-    gh.factory<_i8.HomeViewModel>(
-        () => _i8.HomeViewModel(gh<_i6.MoviesRepository>()));
+    gh.singleton<_i4.MoviesRepository>(
+        _i4.MoviesRepository(gh<_i3.ApiService>()));
+    gh.factory<_i5.HomeViewModel>(
+        () => _i5.HomeViewModel(gh<_i4.MoviesRepository>()));
     return this;
   }
 }
 
-class _$NetworkModule extends _i9.NetworkModule {}
+class _$NetworkModule extends _i6.NetworkModule {}
